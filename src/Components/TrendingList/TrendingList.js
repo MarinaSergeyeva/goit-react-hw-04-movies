@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 export default class TrendingList extends Component {
   state = {
-    trendingList: [],
+    trendingList: []
   };
 
   async componentDidMount() {
-    await API.getTrending().then((trendingList) => {
-      this.setState((prevState) => ({
-        trendingList: [...prevState.trendingList, ...trendingList],
+    await API.getTrending().then(trendingList => {
+      this.setState(prevState => ({
+        trendingList: [...prevState.trendingList, ...trendingList]
       }));
     });
     console.log("this.state", this.state);
@@ -20,15 +20,16 @@ export default class TrendingList extends Component {
     const { trendingList } = this.state;
     return (
       <ul>
-        {trendingList.map((item) => (
-          <Link
-            key={item.id}
-            to={{
-              pathname: `/movies/${item.id}`,
-            }}
-          >
-            <li>{item.title ? item.title : item.original_name}</li>
-          </Link>
+        {trendingList.map(item => (
+          <li key={item.id}>
+            <Link
+              to={{
+                pathname: `/movies/${item.id}`
+              }}
+            >
+              {item.title ?? item.original_name}
+            </Link>
+          </li>
         ))}
       </ul>
     );

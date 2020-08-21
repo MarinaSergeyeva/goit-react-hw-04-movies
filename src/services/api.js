@@ -14,7 +14,7 @@ export default {
 
   searchMovie(query, page = 1) {
     return axios.get(
-      `${baseURL}/search/movie?api_key=${API_KEY}&language=en-US&${query}=king&${page}=1&include_adult=false`
+      `${baseURL}/search/movie?api_key=${API_KEY}&language=en-US&query=${query}&page=${page}&include_adult=false`
     );
   },
 

@@ -24,7 +24,7 @@ export default class TrendingList extends Component {
           <Link
             key={item.id}
             to={{
-              pathname: `/${item.id}`,
+              pathname: `/movies/${item.id}`,
             }}
           >
             <li>{item.title ? item.title : item.original_name}</li>

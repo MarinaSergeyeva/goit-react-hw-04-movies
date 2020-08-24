@@ -5,11 +5,9 @@ const API_KEY = `d90b62d88143f6b8eebbf19cbee39fa4`;
 
 export default {
   getTrending() {
-    return axios
-      .get(`${baseURL}/trending/all/week?api_key=${API_KEY}`)
-      .then(({ data }) => {
-        return data.results;
-      });
+    return axios.get(`${baseURL}/trending/all/week?api_key=${API_KEY}`).then(({ data }) => {
+      return data.results;
+    });
   },
 
   searchMovie(query, page = 1) {
@@ -19,18 +17,20 @@ export default {
   },
 
   getMovieInfo(movie_id) {
-    return axios.get(
-      `${baseURL}/movie/${movie_id}?api_key=${API_KEY}&language=en-US`
-    );
+    return axios.get(`${baseURL}/movie/${movie_id}?api_key=${API_KEY}&language=en-US`);
   },
 
   getMovieCast(movie_id) {
-    return axios.get(`${baseURL}/movie/${movie_id}/credits?api_key=${API_KEY}`);
-  },
-
-  getReviews(movie_id, page) {
     return axios.get(
-      `${baseURL}/movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US&${page}`
+      // `${baseURL}/movie/${movie_id}/credits?api_key=${API_KEY}`);
+      `${baseURL}/movie/${movie_id}/credits?api_key=${API_KEY}`
     );
   },
+
+  getReviews(movie_id) {
+    return axios.get(
+      // `${baseURL}/movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US&${page}`);
+      `${baseURL}/movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+    );
+  }
 };

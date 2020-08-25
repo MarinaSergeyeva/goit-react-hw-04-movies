@@ -22,17 +22,19 @@ class Cast extends Component {
 
     return (
       <>
-        {/* {cast && ( */}
         <ul className={styles.castList}>
           {cast.map(item => (
             <li key={item.credit_id}>
-              <img src={`https://image.tmdb.org/t/p/w500/${item.profile_path}`} alt={item.name} width="75" />
+              <img
+                src={item.profile_path && `https://image.tmdb.org/t/p/w500/${item.profile_path}`}
+                alt={item.name}
+                width="75"
+              />
               <p>{item.name}</p>
               <p>{item.character}</p>
             </li>
           ))}
         </ul>
-        {/* )} */}
       </>
     );
   }

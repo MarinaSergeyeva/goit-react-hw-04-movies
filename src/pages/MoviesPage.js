@@ -10,6 +10,11 @@ export default class MoviesPage extends Component {
     searchList: []
   };
 
+  componentDidMount() {
+    const { location } = this.props;
+    location.search && console.log("Hello");
+  }
+
   handleChange = e => {
     this.setState({
       searchQuery: e.target.value
@@ -26,6 +31,9 @@ export default class MoviesPage extends Component {
         searchQuery: ""
       });
     });
+
+    const { location, history } = this.props;
+    history.push({ ...location, search: `query=${query}` });
   };
 
   render() {
@@ -43,7 +51,7 @@ export default class MoviesPage extends Component {
             <Link
               key={item.id}
               to={{
-                pathname: `/movies/${item.id}`
+                pathname: `${this.props.match.url}/${item.id}`
               }}
             >
               <li>{item.title}</li>

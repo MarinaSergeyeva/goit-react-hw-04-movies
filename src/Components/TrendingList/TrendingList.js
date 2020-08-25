@@ -3,6 +3,7 @@ import API from "../../services/api";
 import { Link } from "react-router-dom";
 
 import styles from "./TrendingList.module.css";
+// import MovieList from "../MovieList/MovieList";
 
 export default class TrendingList extends Component {
   state = {
@@ -15,12 +16,12 @@ export default class TrendingList extends Component {
         trendingList: [...prevState.trendingList, ...trendingList]
       }));
     });
-    console.log("this.state", this.state);
   }
 
   render() {
     const { trendingList } = this.state;
     return (
+      // <MovieList list={trendingList} />
       <ul className={styles.trendingList}>
         {trendingList.map(item => (
           <li key={item.id}>

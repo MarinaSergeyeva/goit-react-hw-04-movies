@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import API from "../../services/api";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import styles from "./TrendingList.module.css";
 // import MovieList from "../MovieList/MovieList";
 
-export default class TrendingList extends Component {
+class TrendingList extends Component {
   state = {
-    trendingList: []
+    trendingList: [],
   };
 
   async componentDidMount() {
-    await API.getTrending().then(trendingList => {
-      this.setState(prevState => ({
-        trendingList: [...prevState.trendingList, ...trendingList]
+    await API.getTrending().then((trendingList) => {
+      this.setState((prevState) => ({
+        trendingList: [...prevState.trendingList, ...trendingList],
       }));
     });
   }
@@ -23,11 +23,11 @@ export default class TrendingList extends Component {
     return (
       // <MovieList list={trendingList} />
       <ul className={styles.trendingList}>
-        {trendingList.map(item => (
+        {trendingList.map((item) => (
           <li key={item.id}>
             <Link
               to={{
-                pathname: `/movies/${item.id}`
+                pathname: `/movies/${item.id}`,
               }}
             >
               {item.title ?? item.original_name}
@@ -38,3 +38,5 @@ export default class TrendingList extends Component {
     );
   }
 }
+
+export default withRouter(TrendingList);

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import API from "../../services/api";
 
+import styles from "./Cast.module.css";
+
 class Cast extends Component {
   state = {
     cast: []
@@ -21,7 +23,7 @@ class Cast extends Component {
     return (
       <>
         {/* {cast && ( */}
-        <ul>
+        <ul className={styles.castList}>
           {cast.map(item => (
             <li key={item.credit_id}>
               <img src={`https://image.tmdb.org/t/p/w500/${item.profile_path}`} alt={item.name} width="75" />

@@ -20,6 +20,12 @@
   margin-right: 10px;
 }
 
+.additionalInfo {
+  padding-bottom: 10px;
+  padding-left: 25px;
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.5);
+}
+
 .additionalItem {
   display: block;
 }

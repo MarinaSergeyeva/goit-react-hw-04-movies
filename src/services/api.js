@@ -30,7 +30,8 @@ export default {
   getReviews(movie_id) {
     return axios.get(
       // `${baseURL}/movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US&${page}`);
-      `${baseURL}/movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+      // `${baseURL}/movie/${movie_id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+      `https://api.themoviedb.org/3/movie/${movie_id}/reviews?api_key=d90b62d88143f6b8eebbf19cbee39fa4&language=en-US&page=1`
     );
   }
 };

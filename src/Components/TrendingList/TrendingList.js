@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import API from "../../services/api";
 import { Link } from "react-router-dom";
 
+import styles from "./TrendingList.module.css";
+
 export default class TrendingList extends Component {
   state = {
     trendingList: []
@@ -19,7 +21,7 @@ export default class TrendingList extends Component {
   render() {
     const { trendingList } = this.state;
     return (
-      <ul>
+      <ul className={styles.trendingList}>
         {trendingList.map(item => (
           <li key={item.id}>
             <Link

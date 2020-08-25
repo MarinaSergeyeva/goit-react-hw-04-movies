@@ -35,17 +35,20 @@ class MovieDetailsPage extends Component {
     const id = this.props.match.params.movieId;
     const { match } = this.props;
 
-    // const release_year = movie.release_date.split("-");
-    // console.log(release_year);
+    let release_year;
+
+    if (movie.release_date) {
+      release_year = movie.release_date.split("-")[0];
+    }
 
     return (
       <div>
         <div className={styles.movieInfoWrapper}>
-          <img className={styles.poster} src={`https://image.tmdb.org/t/p/w500/${img}`} alt={title} width="250" />
+          <img className={styles.poster} src={img && `https://image.tmdb.org/t/p/original/${img}`} alt={title} width="250" />
 
           <div className={styles.movieInfo}>
             <h2>
-              {title} ({movie.release_date})
+              {title} ({release_year})
             </h2>
 
             <p>User score: {Math.round(score)}%</p>
@@ -64,7 +67,7 @@ class MovieDetailsPage extends Component {
           </div>
         </div>
 
-        <div>
+        <div className={styles.additionalInfo}>
           <p>Additional information</p>
           <ul>
             <NavLink to={`${match.url}/cast`} className={styles.additionalItem}>
@@ -74,12 +77,10 @@ class MovieDetailsPage extends Component {
               Reviews
             </NavLink>
           </ul>
-
-          {/* <Reviews /> */}
         </div>
         <Switch>
           <Route path={`${match.url}/cast`} render={props => <Cast {...props} id={id} />} />
-          <Route path={`${match.url}/cast`} render={props => <Reviews {...props} id={id} />} />
+          <Route path={`${match.url}/reviews`} render={props => <Reviews {...props} id={id} />} />
         </Switch>
       </div>
     );

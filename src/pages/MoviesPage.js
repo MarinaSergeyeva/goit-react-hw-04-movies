@@ -8,7 +8,7 @@ import styles from "./MoviesPage.module.css";
 export default class MoviesPage extends Component {
   state = {
     searchQuery: "",
-    searchList: [],
+    searchList: []
   };
 
   componentDidMount() {
@@ -28,18 +28,18 @@ export default class MoviesPage extends Component {
     }
   }
 
-  fetchMovies = (query) => {
+  fetchMovies = query => {
     API.searchMovie(query).then(({ data }) => {
       this.setState({
         searchList: data.results,
-        searchQuery: "",
+        searchQuery: ""
       });
     });
   };
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
-      searchQuery: e.target.value,
+      searchQuery: e.target.value
     });
   };
 
@@ -53,6 +53,7 @@ export default class MoviesPage extends Component {
 
   render() {
     const { searchList } = this.state;
+    console.log("MoviePage", this.props);
 
     return (
       <>
@@ -62,14 +63,14 @@ export default class MoviesPage extends Component {
         </form>
 
         <ul className={styles.searchList}>
-          {searchList.map((item) => (
+          {searchList.map(item => (
             <Link
               key={item.id}
               to={{
                 pathname: `${this.props.match.url}/${item.id}`,
                 state: {
-                  from: this.props.location,
-                },
+                  from: this.props.location
+                }
               }}
             >
               <li>{item.title}</li>

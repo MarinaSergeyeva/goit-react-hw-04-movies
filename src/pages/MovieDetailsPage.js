@@ -1,11 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { withRouter, NavLink, Route, Switch } from "react-router-dom";
 import API from "../services/api";
-import Cast from "../Components/Cast/Cast";
-import Reviews from "../Components/Reviews/Reviews";
-import Button from "../Components/Button/Button";
+// import Cast from "../Components/Cast/Cast";
+// import Reviews from "../Components/Reviews/Reviews";
+// import Button from "../Components/Button/Button";
 
 import styles from "./MovieDeteilsPage.module.css";
+
+const Cast = lazy(() => import("../Components/Cast/Cast"));
+const Reviews = lazy(() => import("../Components/Reviews/Reviews"));
+const Button = lazy(() => import("../Components/Button/Button"));
 
 class MovieDetailsPage extends Component {
   state = {
@@ -15,9 +19,15 @@ class MovieDetailsPage extends Component {
     overview: "",
     genres: [],
     img: "",
+    from: "",
+    search: ""
   };
   async componentDidMount() {
     const id = this.props.match.params.movieId;
+    console.log("this.aasdsadas.location", this.state);
+    if (this.props.location.state?.from) {
+      this.setState({ from: this.props.location.state.from.pathname, search: this.props.location.state.from.search });
+    }
 
     await API.getMovieInfo(id).then(({ data }) =>
       this.setState({
@@ -26,7 +36,7 @@ class MovieDetailsPage extends Component {
         genres: data.genres,
         score: data.popularity,
         overview: data.overview,
-        img: data.poster_path,
+        img: data.poster_path
       })
     );
   }
@@ -36,6 +46,9 @@ class MovieDetailsPage extends Component {
     const id = this.props.match.params.movieId;
     const { match } = this.props;
 
+    const from = this.state.from;
+    const search = this.state.search;
+
     let release_year;
 
     if (movie.release_date) {
@@ -44,15 +57,10 @@ class MovieDetailsPage extends Component {
 
     return (
       <div>
-        <Button />
+        <Button from={from} search={search} />
 
         <div className={styles.movieInfoWrapper}>
-          <img
-            className={styles.poster}
-            src={img && `https://image.tmdb.org/t/p/original/${img}`}
-            alt={title}
-            width="250"
-          />
+          <img className={styles.poster} src={img && `https://image.tmdb.org/t/p/original/${img}`} alt={title} width="250" />
 
           <div className={styles.movieInfo}>
             <h2>
@@ -66,7 +74,7 @@ class MovieDetailsPage extends Component {
 
             <h4>Genres</h4>
             <ul className={styles.genresList}>
-              {genres.map((genre) => (
+              {genres.map(genre => (
                 <li className={styles.genre} key={genre.id}>
                   {genre.name}
                 </li>
@@ -80,10 +88,7 @@ class MovieDetailsPage extends Component {
           <ul>
             <NavLink
               to={{
-                pathname: `${match.url}/cast`,
-                state: {
-                  from: this.props.location,
-                },
+                pathname: `${match.url}/cast`
               }}
               className={styles.additionalItem}
             >
@@ -91,10 +96,7 @@ class MovieDetailsPage extends Component {
             </NavLink>
             <NavLink
               to={{
-                pathname: `${match.url}/reviews`,
-                state: {
-                  from: this.props.location,
-                },
+                pathname: `${match.url}/reviews`
               }}
               className={styles.additionalItem}
             >
@@ -102,16 +104,12 @@ class MovieDetailsPage extends Component {
             </NavLink>
           </ul>
         </div>
-        <Switch>
-          <Route
-            path={`${match.url}/cast`}
-            render={(props) => <Cast {...props} id={id} />}
-          />
-          <Route
-            path={`${match.url}/reviews`}
-            render={(props) => <Reviews {...props} id={id} />}
-          />
-        </Switch>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route path={`${match.url}/cast`} render={props => <Cast {...props} id={id} />} />
+            <Route path={`${match.url}/reviews`} render={props => <Reviews {...props} id={id} />} />
+          </Switch>
+        </Suspense>
       </div>
     );
   }
